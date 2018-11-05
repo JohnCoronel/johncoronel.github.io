@@ -15,9 +15,9 @@
 <meta property="og:site_name" content="John Coronel" />
 <meta property="og:locale" content="nn_NO" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://johncoronel.github.io/projects/sfmap/" />
-<meta property="og:title" content="Sfmap" />
-<meta property="twitter:title" content="Sfmap">
+<meta property="og:url" content="https://johncoronel.github.io/blog/refactoring-react-with-styled-components/" />
+<meta property="og:title" content="Refactoring React with Styled-Components" />
+<meta property="twitter:title" content="Refactoring React with Styled-Components">
 
     <meta property="twitter:card" content="summary">
 
@@ -27,10 +27,10 @@
 <title>
 
 
-     John Coronel - Sfmap 
+     John Coronel - Refactoring React with Styled-Components 
 
 </title>
-<link rel="canonical" href="https://johncoronel.github.io/projects/sfmap/">
+<link rel="canonical" href="https://johncoronel.github.io/blog/refactoring-react-with-styled-components/">
 
 
 <style media="screen">
@@ -1088,24 +1088,230 @@ div.main .content .markdown pre, div.main .content .markdown pre code {
     </div>
 </div>
 
-<div class="main column">
+
+
+
+<div class="main post non-narrow zero-top-spacing column">
     <div class="container">
         <div class="content">
-            <div class="page-heading">
+            <div class="front-matter">
+                <div class="title-container">
+                    <div class="page-heading">
 
-    Sfmap
+    Refactoring React with Styled-Components
 
 </div>
 
+                </div>
+                <div class="meta">
+                    <div class="date" title="Sun Nov 4 2018">Nov 2018</div>
+                    
+                        
+                    
+                    <div class="reading-time middot">3 minute read</div>
+                    <div class="tags">
+                        <ul>
+                          
+                        </ul>
+                    </div>
+                    <div class="tags">
+                        <ul>
+                          
+                          
+                        </ul>
+                    </div>
+                </div>
+            </div>
             <div class="markdown">
                 
     
     
 
+<h1 id="refactoring-with-styled-components">Refactoring with styled-components</h1>
+
+<p>I&rsquo;ve recently been working on refactoring a React web app I wrote a while back ago where the styling is an unpleasent mix of inline-styles,scss,and classNames scattered throughout different components. After researching different css-in-js libraries I decided to go with <a href="https://www.styled-components.com/">styled-components</a>. One immediate improvement I noticed was how semantically nicer my components were to read.</p>
+
+<h2 id="previous-classnames-and-css">Previous - classNames and css</h2>
+
+<pre><code class="language-javascript">const content = ClassNames({
+            'movie-card__content__body':true,
+            'movie-card__content__body--active':this.state.expanded
+        })
+const body = ClassNames({
+            &quot;movie-card__content--active&quot;: this.state.expanded,
+            &quot;movie-card__content&quot;: true
+            
+        })
+
+            &lt;div className = &quot;movie-card&quot;&gt;
+                &lt;div className = {image}&gt;
+              
+               &lt;img src = {this.props.movie.poster_path} alt = &quot;poster&quot;/&gt;
+                &lt;/div&gt;
+                    &lt;div className = {body}&gt;
+                        &lt;h3&gt;{this.props.movie.title}&lt;/h3&gt;
+                        &lt;h5&gt; &lt;span&gt;&lt;GenreIcon/&gt; Action &lt;/span&gt; &lt;span&gt;&lt;TimeIcon/&gt; 118m &lt;/span&gt;  &lt;span&gt;&lt;CalendarIcon/&gt;  2013 &lt;/span&gt; &lt;/h5&gt;
+                        &lt;div className ={content}&gt;
+                        &lt;p&gt;
+                        {
+                            this.props.movie.overview
+                        } 
+                        &lt;/p&gt;
+                    &lt;/div&gt;
+                    &lt;div className = &quot;movie-card__footer&quot;&gt;
+                            &lt;LikeIcon/&gt;
+                            &lt;ShareIcon/&gt;
+                            &lt;ReviewIcon/&gt;
+                            &lt;AddIcon/&gt;
+                        &lt;/div&gt;
+                       
+                    &lt;/div&gt;
+                    &lt;div onClick = {this.showContent} 
+                    className={movieBtn&gt;
+                    &lt;ChevronIcon/&gt;
+                    &lt;/div&gt;
+     &lt;/div&gt;
+</code></pre>
+
+<h2 id="after-with-styled-components">After - with styled-components</h2>
+
+<pre><code class="language-javascript">
+&lt;Container&gt;
+    &lt;Poster expanded = {this.state.expanded} 
+    src = {this.props.movie.poster_path}/&gt;
+        &lt;Content expanded = {this.state.expanded}&gt;
+            &lt;Header&gt;
+                &lt;Title&gt;
+                    {this.props.movie.title}
+                &lt;/Title&gt;
+                    &lt;SubHeader&gt; 
+                        &lt;Field&gt;      
+                            &lt;GenreIcon/&gt;
+                            {this.props.movie.genres[0]}
+                        &lt;/Field&gt;
+                        &lt;Field&gt;
+                            &lt;CalendarIcon/&gt;
+                            {this.props.movie.release}
+                        &lt;/Field&gt;
+                            
+                        &lt;/SubHeader&gt;
+                    &lt;/Header&gt;
+                    &lt;Body expanded = {this.state.expanded} &gt;
+                        {this.props.movie.overview}
+                    &lt;/Body&gt;
+                &lt;/Content&gt;
+                &lt;Footer&gt;
+                    &lt;LikeIcon/&gt;
+                    &lt;ShareIcon/&gt;
+                    &lt;ReviewIcon/&gt;
+                    &lt;AddIcon/&gt;
+                &lt;/Footer&gt;
+                &lt;ShadowBox&gt;
+                    &lt;ActionBtn expanded = {this.state.expanded}
+                               onClick = {this.onClick}&gt; 
+                        &lt;ChevronIcon/&gt; 
+                    &lt;/ActionBtn&gt;
+                 &lt;/ShadowBox&gt;
+&lt;/Container&gt;
+</code></pre>
+
+<p>In this case components such as Field,Footer,Header,ect are created with styled-components which allows us to write good old fashioned css in a template literal.</p>
+
+<pre><code class="language-javascript">const Container = styled.div`
+    font-family: sans-serif;
+    margin: 0 auto;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.16), 0 2px 3px rgba(0,0,0,0.23);
+    border-radius:3px;
+    position:relative;
+    width:210px;
+    overflow:hidden;
+    height:410px;
+    &amp;::after {
+            position:absolute;
+            bottom:0;
+            width:100%;
+            height:1px;
+            content:'';
+            background: linear-gradient(to left,#ffafbd, #ffc3a0);   
+    }
+`
+</code></pre>
+
+<p>Styled-components has some other great features - one in particular is passing props into the template literals. I&rsquo;ve used this to great effects in refactoring css animations.</p>
+
+<h2 id="before">Before</h2>
+
+<p>Using classNames to to toggle a class based on state.</p>
+
+<pre><code class="language-javascript">     const content = ClassNames({
+            'movie-card__content__body':true,
+            'movie-card__content__body--active':this.state.expanded
+        })
+
+    &lt;div className = {content}&gt;
+    ...
+    
+
+
+.movie-card__content {
+    box-shadow: 0 1px 2px rgba(0,0,0,0.16), 0 2px 3px rgba(0,0,0,0.23);
+    overflow:hidden;
+    position:relative;
+    padding-top:4px;
+    height:90px;
+    transition: .5s ease-in;
+}
+
+.movie-card__content--active{
+    transition: .5s ease-in;
+    height:405px;
+}
+</code></pre>
+
+<h2 id="after">After</h2>
+
+<p>Passing in toggle state directly into the styled-component&rsquo;s template literal.</p>
+
+<pre><code class="language-javascript">const Content = styled.div`
+    transform: ${props =&gt; props.expanded ? &quot;translateY(-290px)&quot; : &quot;translateY(0)&quot;};
+    transition: transform .6s;
+    height:360px;
+    position:relative;
+    background: white; 
+`
+&lt;Content expanded = {this.state.expanded}&gt;
+</code></pre>
+
+<p>Passing the toggle state as props(this.state.expanded) which then can
+be interpolated via passing in a function, allowing us to adapt style and animations with the passed in props.</p>
+
+<p>Overall I&rsquo;m enjoying the transition to styled-components. I&rsquo;ve yet to use all of its features, such as the ThemeProvider which can be used as a wrapper to inject theme props into all child components, which is next on my list.</p>
+
+
+                <br>
             </div>
+            
+            
+                <div class="navigation">
+                    
+                    <div style="width: 100%;"></div>
+                    
+                    <div>
+                        <a href="https://johncoronel.github.io/blog/improving-css-animation-performance/">Improving CSS Animation Performance</a>
+                        <img class="icon" src="https://johncoronel.github.io/img/next.svg" alt="next" />
+                    </div>
+                    
+                </div>
+            
+            <br>
+            <div class="disqus">
+                
+            </div>
+            
         </div>
     </div>
 </div>
+
 <div class="footer column">
     <div class="container">
 

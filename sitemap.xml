@@ -3,6 +3,21 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://johncoronel.github.io/blog/improving-css-animation-performance/</loc>
+    <lastmod>2018-11-04T20:00:36-08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://johncoronel.github.io/blog/refactoring-react-with-styled-components/</loc>
+    <lastmod>2018-11-04T17:00:16-08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://johncoronel.github.io/projects/pythonadv/</loc>
+    <lastmod>2018-08-11T22:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://johncoronel.github.io/projects/sfmap/</loc>
     <lastmod>2018-05-12T22:11:10-07:00</lastmod>
   </url>
@@ -10,11 +25,6 @@
   <url>
     <loc>https://johncoronel.github.io/projects/quetzalcoatl/</loc>
     <lastmod>2018-05-12T22:10:39-07:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://johncoronel.github.io/projects/projects/</loc>
-    <lastmod>2018-05-12T21:53:00-07:00</lastmod>
   </url>
   
   <url>
@@ -28,13 +38,8 @@
   </url>
   
   <url>
-    <loc>https://johncoronel.github.io/blog/hello/</loc>
-    <lastmod>2018-05-12T00:46:46-07:00</lastmod>
-  </url>
-  
-  <url>
     <loc>https://johncoronel.github.io/blog/</loc>
-    <lastmod>2018-05-12T00:46:46-07:00</lastmod>
+    <lastmod>2018-11-04T20:00:36-08:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -45,13 +50,13 @@
   
   <url>
     <loc>https://johncoronel.github.io/</loc>
-    <lastmod>2018-05-12T22:11:10-07:00</lastmod>
+    <lastmod>2018-11-04T20:00:36-08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://johncoronel.github.io/projects/</loc>
-    <lastmod>2018-05-12T22:11:10-07:00</lastmod>
+    <lastmod>2018-08-11T22:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
