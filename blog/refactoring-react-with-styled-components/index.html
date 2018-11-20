@@ -932,8 +932,8 @@ margin-left: -4%;
 }
 div.main .content .markdown img {
 max-width: 110%;
-width: 110%;
-margin-left: -4%;
+
+/* margin-left: -4%; */
 }
 div.main .content .markdown pre {
 width: 110%;
@@ -954,10 +954,6 @@ margin-left: -4%;
   </style>
 
 
-
-  <style type="text/css" media="screen">
-    .progressive{overflow:hidden;position:relative;background:#efefef}.progressive__img{width:100%;height:100%;position:absolute;-webkit-transform:translateZ(0);transform:translateZ(0)}.progressive--not-loaded{filter:blur(30px);-webkit-filter:blur(30px)}.progressive--is-loaded{filter:blur(20px);-webkit-filter:blur(20px);-webkit-animation:sharpen .5s both;animation:sharpen .5s both}@-webkit-keyframes sharpen{from{filter:blur(20px);-webkit-filter:blur(20px)}to{filter:blur(0);-webkit-filter:blur(0)}}@keyframes sharpen{from{filter:blur(20px);-webkit-filter:blur(20px)}to{filter:blur(0);-webkit-filter:blur(0)}}
-  </style>
 
 
 
@@ -1125,11 +1121,10 @@ div.main .content .markdown pre, div.main .content .markdown pre code {
             <div class="markdown">
                 
     
-    
 
 <h1 id="refactoring-with-styled-components">Refactoring with styled-components</h1>
 
-<p>I&rsquo;ve recently been working on refactoring a React web app I wrote a while back ago where the styling is an unpleasent mix of inline-styles,scss,and classNames scattered throughout different components. After researching different css-in-js libraries I decided to go with <a href="https://www.styled-components.com/">styled-components</a>. One immediate improvement I noticed was how semantically nicer my components were to read.</p>
+<p>I&rsquo;ve recently been working on refactoring a React web app I wrote a while back where the styling was an unpleasent mix of inline-styles,scss,and classNames scattered through different components and files. After researching different css-in-js libraries I decided to refactor with <a href="https://www.styled-components.com/">styled-components</a>. One noticable change was the semantic improvement on my code with styled-components.</p>
 
 <h2 id="previous-classnames-and-css">Previous - classNames and css</h2>
 
@@ -1150,25 +1145,24 @@ const body = ClassNames({
                 &lt;/div&gt;
                     &lt;div className = {body}&gt;
                         &lt;h3&gt;{this.props.movie.title}&lt;/h3&gt;
-                        &lt;h5&gt; &lt;span&gt;&lt;GenreIcon/&gt; Action &lt;/span&gt; &lt;span&gt;&lt;TimeIcon/&gt; 118m &lt;/span&gt;  &lt;span&gt;&lt;CalendarIcon/&gt;  2013 &lt;/span&gt; &lt;/h5&gt;
+                         &lt;span&gt;&lt;GenreIcon/&gt; Action&lt;/span&gt;
+                         &lt;span&gt;&lt;TimeIcon/&gt; 118m &lt;/span&gt;
+                        &lt;span&gt;&lt;CalendarIcon/&gt;  2013 &lt;/span&gt;
                         &lt;div className ={content}&gt;
-                        &lt;p&gt;
-                        {
-                            this.props.movie.overview
-                        } 
-                        &lt;/p&gt;
-                    &lt;/div&gt;
-                    &lt;div className = &quot;movie-card__footer&quot;&gt;
+                            &lt;p&gt;
+                                { this.props.movie.overview } 
+                            &lt;/p&gt;
+                        &lt;/div&gt;
+                        &lt;div className = &quot;movie-card__footer&quot;&gt;
                             &lt;LikeIcon/&gt;
                             &lt;ShareIcon/&gt;
                             &lt;ReviewIcon/&gt;
                             &lt;AddIcon/&gt;
-                        &lt;/div&gt;
-                       
+                        &lt;/div&gt; 
                     &lt;/div&gt;
                     &lt;div onClick = {this.showContent} 
                     className={movieBtn&gt;
-                    &lt;ChevronIcon/&gt;
+                        &lt;ChevronIcon/&gt;
                     &lt;/div&gt;
      &lt;/div&gt;
 </code></pre>
@@ -1215,7 +1209,7 @@ const body = ClassNames({
 &lt;/Container&gt;
 </code></pre>
 
-<p>In this case components such as Field,Footer,Header,ect are created with styled-components which allows us to write good old fashioned css in a template literal.</p>
+<p>The styled-components code is easier to read and the the tags have semantic meaning.</p>
 
 <pre><code class="language-javascript">const Container = styled.div`
     font-family: sans-serif;
@@ -1239,9 +1233,12 @@ const body = ClassNames({
 
 <p>Styled-components has some other great features - one in particular is passing props into the template literals. I&rsquo;ve used this to great effects in refactoring css animations.</p>
 
+<p>Any logic that only effects styling can be done in the template literal.</p>
+
 <h2 id="before">Before</h2>
 
-<p>Using classNames to to toggle a class based on state.</p>
+<p>Using classNames to toggle a class based on state.
+ Notice that I need two seperate classes to change one attribute.</p>
 
 <pre><code class="language-javascript">     const content = ClassNames({
             'movie-card__content__body':true,
@@ -1282,8 +1279,7 @@ const body = ClassNames({
 &lt;Content expanded = {this.state.expanded}&gt;
 </code></pre>
 
-<p>Passing the toggle state as props(this.state.expanded) which then can
-be interpolated via passing in a function, allowing us to adapt style and animations with the passed in props.</p>
+<p>Passing the toggle state as props(this.state.expanded) which then can be interpolated into the template literal,</p>
 
 <p>Overall I&rsquo;m enjoying the transition to styled-components. I&rsquo;ve yet to use all of its features, such as the ThemeProvider which can be used as a wrapper to inject theme props into all child components, which is next on my list.</p>
 
@@ -1381,8 +1377,6 @@ be interpolated via passing in a function, allowing us to adapt style and animat
 
 
 
-  <script src="https://johncoronel.github.io/js/progressively.min.js" defer></script>
-
 
 
 
@@ -1393,8 +1387,6 @@ be interpolated via passing in a function, allowing us to adapt style and animat
     
       hljs.initHighlighting();
     
-    
-      progressively.init({delay: 30, throttle: 50});
     
     
   };

@@ -17,7 +17,7 @@
       <pubDate>Sun, 04 Nov 2018 20:00:36 -0800</pubDate>
       
       <guid>https://johncoronel.github.io/blog/improving-css-animation-performance/</guid>
-      <description></description>
+      <description>In my previous blog I wrote about refactoring a react application&amp;rsquo;s css and animation with Styled-Components. One specific I didn&amp;rsquo;t cover there were the improvements I made towards the application&amp;rsquo;s animation performance. If you noticed in the refactored code, I&amp;rsquo;m animating different css properties. The reason being that, in my original code my animations were causing expensive browser reflows. These browser reflows didn&amp;rsquo;t cause any visible lag while testing locally,and testing the components in isolation via dev-tools showed I was getting a consistent 60fps.</description>
     </item>
     
     <item>
@@ -26,7 +26,7 @@
       <pubDate>Sun, 04 Nov 2018 17:00:16 -0800</pubDate>
       
       <guid>https://johncoronel.github.io/blog/refactoring-react-with-styled-components/</guid>
-      <description>Refactoring with styled-components I&amp;rsquo;ve recently been working on refactoring a React web app I wrote a while back ago where the styling is an unpleasent mix of inline-styles,scss,and classNames scattered throughout different components. After researching different css-in-js libraries I decided to go with styled-components. One immediate improvement I noticed was how semantically nicer my components were to read.
+      <description>Refactoring with styled-components I&amp;rsquo;ve recently been working on refactoring a React web app I wrote a while back where the styling was an unpleasent mix of inline-styles,scss,and classNames scattered through different components and files. After researching different css-in-js libraries I decided to refactor with styled-components. One noticable change was the semantic improvement on my code with styled-components.
 Previous - classNames and css const content = ClassNames({ &#39;movie-card__content__body&#39;:true, &#39;movie-card__content__body--active&#39;:this.state.expanded }) const body = ClassNames({ &amp;quot;movie-card__content--active&amp;quot;: this.</description>
     </item>
     

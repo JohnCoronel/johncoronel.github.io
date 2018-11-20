@@ -932,8 +932,8 @@ margin-left: -4%;
 }
 div.main .content .markdown img {
 max-width: 110%;
-width: 110%;
-margin-left: -4%;
+
+/* margin-left: -4%; */
 }
 div.main .content .markdown pre {
 width: 110%;
@@ -954,10 +954,6 @@ margin-left: -4%;
   </style>
 
 
-
-  <style type="text/css" media="screen">
-    .progressive{overflow:hidden;position:relative;background:#efefef}.progressive__img{width:100%;height:100%;position:absolute;-webkit-transform:translateZ(0);transform:translateZ(0)}.progressive--not-loaded{filter:blur(30px);-webkit-filter:blur(30px)}.progressive--is-loaded{filter:blur(20px);-webkit-filter:blur(20px);-webkit-animation:sharpen .5s both;animation:sharpen .5s both}@-webkit-keyframes sharpen{from{filter:blur(20px);-webkit-filter:blur(20px)}to{filter:blur(0);-webkit-filter:blur(0)}}@keyframes sharpen{from{filter:blur(20px);-webkit-filter:blur(20px)}to{filter:blur(0);-webkit-filter:blur(0)}}
-  </style>
 
 
 
@@ -1108,7 +1104,7 @@ div.main .content .markdown pre, div.main .content .markdown pre code {
                     
                         
                     
-                    <div class="reading-time middot">0 minute read</div>
+                    <div class="reading-time middot">2 minute read</div>
                     <div class="tags">
                         <ul>
                           
@@ -1125,7 +1121,34 @@ div.main .content .markdown pre, div.main .content .markdown pre code {
             <div class="markdown">
                 
     
-    
+
+<p>In my previous blog I wrote about refactoring a react application&rsquo;s css and animation with Styled-Components. One specific I didn&rsquo;t cover there were the improvements I made towards the application&rsquo;s animation performance. If you noticed in the refactored code, I&rsquo;m animating different css properties. The reason being that, in my original code my animations were causing expensive browser reflows. These browser reflows didn&rsquo;t cause any visible lag while testing locally,and testing the components in isolation via dev-tools showed I was getting a consistent 60fps. So naively, I assumed everything was ok.</p>
+
+<p>It wasn&rsquo;t until I opened up my app from an older mobile device that I noticed some stutter during the animations. Going back to chrome dev-tools and profiling with the CPU throttled to simulate mobile devices, my animations were no longer at a silky smooth 60fps - matching the percieved lag I saw on the mobile device.</p>
+
+<p>To improve the animation performance I would have to dig deeper into the chrome dev tools performance tab and understand browser reflows.</p>
+
+<h3 id="browser-reflows">Browser Reflows</h3>
+
+<p>Our browsers are responsible for mainting the geometry of our web page. When we animate or change values that effect that geometry, the browser recalculates the layout and re-renders it. This process isn&rsquo;t free,but most browsers implement smart ways to handle animations with the GPU to optimize painting and composition. With that in mind, the browser still allows us to do things that aren&rsquo;t optimized.</p>
+
+<p>Some common things we can animate are position,size and visibility. In a current project I&rsquo;m working on I have a component that does all three.</p>
+
+<p><img src="https://johncoronel.github.io/img/card.gif" alt="alt img" title="Card" /></p>
+
+<p>In this example I&rsquo;m changing the position of the cards contents upward(translateY()), zooming in to the background poster(scale()), and making the contents text visible(opacity).</p>
+
+<h2 id="fps-summary">FPS | Summary</h2>
+
+<p><img src="https://johncoronel.github.io/img/cssperf/improvedPerf.png" alt="alt img" title="Improved Performance" /> | <img src="https://johncoronel.github.io/img/cssperf/improvedPerfChart.png" alt="alt img" title="Improved Perf Chart" /> |</p>
+
+<p><img src="https://johncoronel.github.io/img/cssperf/slowPerf.png" alt="alt img" title="Slow Performance" />
+<img src="https://johncoronel.github.io/img/cssperf/slowPerfChart.png" alt="alt img" title="Slow Perf Chart" /></p>
+
+<p>&mdash; Lesson - mobile devices account for x% of internet traffic. Test performance with that in mind.
+&mdash; Dont animate width/height, ect.
+&mdash; Chrome dev tools</p>
+
 
                 <br>
             </div>
@@ -1220,8 +1243,6 @@ div.main .content .markdown pre, div.main .content .markdown pre code {
 
 
 
-  <script src="https://johncoronel.github.io/js/progressively.min.js" defer></script>
-
 
 
 
@@ -1232,8 +1253,6 @@ div.main .content .markdown pre, div.main .content .markdown pre code {
     
       hljs.initHighlighting();
     
-    
-      progressively.init({delay: 30, throttle: 50});
     
     
   };
