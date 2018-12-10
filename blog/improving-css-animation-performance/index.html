@@ -1104,7 +1104,7 @@ div.main .content .markdown pre, div.main .content .markdown pre code {
                     
                         
                     
-                    <div class="reading-time middot">2 minute read</div>
+                    <div class="reading-time middot">3 minute read</div>
                     <div class="tags">
                         <ul>
                           
@@ -1122,11 +1122,11 @@ div.main .content .markdown pre, div.main .content .markdown pre code {
                 
     
 
-<p>In my previous blog I wrote about refactoring a react application&rsquo;s css and animation with Styled-Components. One specific I didn&rsquo;t cover there were the improvements I made towards the application&rsquo;s animation performance. If you noticed in the refactored code, I&rsquo;m animating different css properties. The reason being that, in my original code my animations were causing expensive browser reflows. These browser reflows didn&rsquo;t cause any visible lag while testing locally,and testing the components in isolation via dev-tools showed I was getting a consistent 60fps. So naively, I assumed everything was ok.</p>
+<p>In my previous blog I wrote about refactoring a react application&rsquo;s css and animation with Styled-Components. One specific I didn&rsquo;t cover there were the improvements I made towards the application&rsquo;s animation performance. If you noticed in the refactored code, I&rsquo;m animating different css properties. The reason being that, in my original code my animations were causing expensive browser reflows. These browser reflows didn&rsquo;t cause any visible lag while testing locally,and testing the components in isolation via dev-tools showed I was getting a consistent 60fps. So naively I assumed everything was ok.</p>
 
-<p>It wasn&rsquo;t until I opened up my app from an older mobile device that I noticed some stutter during the animations. Going back to chrome dev-tools and profiling with the CPU throttled to simulate mobile devices, my animations were no longer at a silky smooth 60fps - matching the percieved lag I saw on the mobile device.</p>
+<p>It wasn&rsquo;t until I opened up my app from an older mobile device that I noticed some stutter during the animations. Going back to chrome dev-tools and profiling with the CPU throttled to simulate mobile devices, my animations were no longer near a silky smooth 60fps - matching the percieved lag I saw on the mobile device.</p>
 
-<p>To improve the animation performance I would have to dig deeper into the chrome dev tools performance tab and understand browser reflows.</p>
+<p>To improve the animation performance I would have to dig deeper into the chrome dev tools performance tab and understand the effects browser reflows.</p>
 
 <h3 id="browser-reflows">Browser Reflows</h3>
 
@@ -1136,18 +1136,47 @@ div.main .content .markdown pre, div.main .content .markdown pre code {
 
 <p><img src="https://johncoronel.github.io/img/card.gif" alt="alt img" title="Card" /></p>
 
-<p>In this example I&rsquo;m changing the position of the cards contents upward(translateY()), zooming in to the background poster(scale()), and making the contents text visible(opacity).</p>
+<p>In the card component above the contents of the card are pushed up and its contents become visible. As the content pushes upwards, the poster zooms in.</p>
 
-<h2 id="fps-summary">FPS | Summary</h2>
+<p>My original styling looked something like this</p>
 
-<p><img src="https://johncoronel.github.io/img/cssperf/improvedPerf.png" alt="alt img" title="Improved Performance" /> | <img src="https://johncoronel.github.io/img/cssperf/improvedPerfChart.png" alt="alt img" title="Improved Perf Chart" /> |</p>
+<pre><code>
+ .movie-card__content {
+     height:90px;
+ }
+
+ .movie-card__content--active {
+    height:400px;
+ }
+
+</code></pre>
+
+<p>The updated better performing css (styled components template literal used)</p>
+
+<pre><code>transform: ${props =&gt; props.active ? &quot;translateY(-290px)&quot; : &quot;translateY(0)&quot;};
+</code></pre>
+
+<p>The main bottleneck in the original animation was the changing of the height property. To see what the browser is doing we can use chrome dev-tools.</p>
+
+<h3 id="original">Original</h3>
 
 <p><img src="https://johncoronel.github.io/img/cssperf/slowPerf.png" alt="alt img" title="Slow Performance" />
 <img src="https://johncoronel.github.io/img/cssperf/slowPerfChart.png" alt="alt img" title="Slow Perf Chart" /></p>
 
-<p>&mdash; Lesson - mobile devices account for x% of internet traffic. Test performance with that in mind.
-&mdash; Dont animate width/height, ect.
-&mdash; Chrome dev tools</p>
+<h3 id="improved">Improved</h3>
+
+<p><img src="https://johncoronel.github.io/img/cssperf/improvedPerf.png" alt="alt img" title="Improved Performance" />
+<img src="https://johncoronel.github.io/img/cssperf/improvedPerfChart.png" alt="alt img" title="Improved Perf Chart" /></p>
+
+<p>Notice in the original how much more resources are being used rendering and painting, a result of the browser reflows and the reason for the stuttering noticed on my mobile device. The FPS(green bar chart) shows the dips in frames while animating - resembling my ancedotal experience.</p>
+
+<h3 id="takeaways">Takeaways</h3>
+
+<p>Treat mobile users as a priority and consider a wide range of different performing devices. Note that most <a href="https://www.statista.com/statistics/277125/share-of-website-traffic-coming-from-mobile-devices/">web traffic</a> is from mobile, so we should develop with that in mind.</p>
+
+<p>Know your browser tools. Chrome comes with great tools to measure web performance, and in this case I was able to confirm and pinpoint the slow performance with dev-tools. Chrome even has <a href="https://developers.google.com/web/tools/chrome-devtools/device-mode/">tools</a> to simulate a range of devices and throttle CPU and network conditions.</p>
+
+<p>Avoid browser reflows. Animating certain properties can trigger a layout, taxing the CPU. Browsers optimize transform() and opacity changes to run on the compositor thread(GPU). See <a href="https://csstriggers.com/">here</a> for a detailed list.</p>
 
 
                 <br>

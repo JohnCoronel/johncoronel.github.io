@@ -1209,7 +1209,7 @@ const body = ClassNames({
 &lt;/Container&gt;
 </code></pre>
 
-<p>The styled-components code is easier to read and the the tags have semantic meaning.</p>
+<p>The styled-components code is easier to read and the tags have semantic meaning. No more nested divs with BEM class name conventions.</p>
 
 <pre><code class="language-javascript">const Container = styled.div`
     font-family: sans-serif;
@@ -1229,6 +1229,7 @@ const body = ClassNames({
             background: linear-gradient(to left,#ffafbd, #ffc3a0);   
     }
 `
+
 </code></pre>
 
 <p>Styled-components has some other great features - one in particular is passing props into the template literals. I&rsquo;ve used this to great effects in refactoring css animations.</p>
@@ -1279,9 +1280,9 @@ const body = ClassNames({
 &lt;Content expanded = {this.state.expanded}&gt;
 </code></pre>
 
-<p>Passing the toggle state as props(this.state.expanded) which then can be interpolated into the template literal,</p>
+<p>Passing the toggle state as props(this.state.expanded) which then can be interpolated into the template literal and have the styles be applied dynamically without the creation of another css class.</p>
 
-<p>Overall I&rsquo;m enjoying the transition to styled-components. I&rsquo;ve yet to use all of its features, such as the ThemeProvider which can be used as a wrapper to inject theme props into all child components, which is next on my list.</p>
+<p>Overall the experience with styled-components has been positive. The value of coupling styles with javascript has made writing css less of a pain, avoiding nested divs with BEM or OMCSS classNames.</p>
 
 
                 <br>
