@@ -6,36 +6,21 @@
     <description>Recent content in Projects on John Coronel</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-US</language>
-    <lastBuildDate>Sat, 11 Aug 2018 22:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 12 May 2018 22:11:10 -0700</lastBuildDate>
     
 	<atom:link href="https://johncoronel.github.io/projects/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
-      <title>A Python Adventure</title>
-      <link>https://johncoronel.github.io/projects/pythonadv/</link>
-      <pubDate>Sat, 11 Aug 2018 22:00:00 +0000</pubDate>
-      
-      <guid>https://johncoronel.github.io/projects/pythonadv/</guid>
-      <description> </description>
-    </item>
-    
-    <item>
-      <title>Sfmap</title>
-      <link>https://johncoronel.github.io/projects/sfmap/</link>
+      <title>Backwoods Tracker</title>
+      <link>https://johncoronel.github.io/projects/backwoodstracker/</link>
       <pubDate>Sat, 12 May 2018 22:11:10 -0700</pubDate>
       
-      <guid>https://johncoronel.github.io/projects/sfmap/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Quetzalcoatl</title>
-      <link>https://johncoronel.github.io/projects/quetzalcoatl/</link>
-      <pubDate>Sat, 12 May 2018 22:10:39 -0700</pubDate>
-      
-      <guid>https://johncoronel.github.io/projects/quetzalcoatl/</guid>
-      <description></description>
+      <guid>https://johncoronel.github.io/projects/backwoodstracker/</guid>
+      <description> Bkwds
+An application that allows users to plan and manage hiking trips. Users can share trip their trip status and archieve trips.
+Client Side  React
+ Redux Styled-Components  Backend  Firebase MongoDB Nodejs  APIs  Google Maps Stripe  </description>
     </item>
     
   </channel>
